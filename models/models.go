@@ -19,8 +19,8 @@ type User struct {
 	Updated_At      time.Time          `json: "updated_at"`
 	User_ID         *string            `json: "user_id"`
 	UserBasket      []BookUser         `json: userbasket bson:"userbasket"`
-	Address_Details []Address          ``
-	Borrow_Status   []Borrow
+	Address_Details []Address          `json:"address" bson:"address"`
+	Borrow_Status   []Borrow		   `json:"borrow" bson:"borrow"`
 }
 
 type Book struct {
