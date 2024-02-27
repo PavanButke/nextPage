@@ -15,7 +15,7 @@ func main(){
 
 	}
 
-	app:= controllers.NewApplication(database.ProductData(database.Client , "Products") , database.UserData(data));
+	app:= controllers.NewApplication(database.BookData(database.Client , "Books") , database.UserData(data));
 	router:= gin.New()
 	router.Use(gin.Logger())
 
