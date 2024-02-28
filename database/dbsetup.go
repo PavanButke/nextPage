@@ -1,12 +1,17 @@
 package database
 
-import(
+import (
+	"context"
+	"fmt"
+	"log"
+	"time"
+
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-func DBSet() *mongo.client{
-	client , err:= mongo.NewClient(options.Client().ApplyURI("mongodb://localhost:27017")
+func DBSet() *mongo.Client {
+	client, err := mongo.NewClient(options.Client().ApplyURI("mongodb://localhost:27017"))
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -28,12 +33,12 @@ func DBSet() *mongo.client{
 
 var Client *mongo.Client = DBSet()
 
-func UserData(client *mongo.Client, collectionName string) *mongo.Collection{
+func UserData(client *mongo.Client, CollectionName string) *mongo.Collection {
 	var collection *mongo.Collection = client.Database("NextPage").Collection(CollectionName)
 	return collection
 }
 
-func BookData(client *mongo.Client, collectionName string) *mongo.Collection {
+func BookData(client *mongo.Client, CollectionName string) *mongo.Collection {
 	var bookCollection *mongo.Collection = client.Database("NextPage").Collection(CollectionName)
 	return bookCollection
 }
