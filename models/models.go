@@ -14,23 +14,23 @@ type User struct {
 	Email           *string            `json: "email"		validate:"email , required"`
 	Phone           *string            `json: "phone"`
 	Token           *string            `json: "token"`
-	Refresh_Token   *string            `json: "refreshed_token`
+	Refresh_Token   *string            `json: "refresh_token`
 	Created_At      time.Time          `json: "created_at"`
 	Updated_At      time.Time          `json: "updated_at"`
-	User_ID         *string            `json: "user_id"`
+	User_ID         string             `json: "user_id"`
 	UserBasket      []BookUser         `json: userbasket bson:"userbasket"`
 	Address_Details []Address          `json:"address" bson:"address"`
-	Borrow_Status   []Borrow		   `json:"borrow" bson:"borrow"`
+	Borrow_Status   []Borrow           `json:"borrow" bson:"borrow"`
 }
 
 type Book struct {
-	Book_ID         primitive.ObjectID `bson:"_id"`
-	Book_Name       *string            `json: "book_name" validate:"required"`
-	Author          *string            `json: "author"`
-	Price           *uint64            `json: "price"`
+	Book_ID   primitive.ObjectID `bson:"_id"`
+	Book_Name *string            `json: "book_name" validate:"required"`
+	Author    *string            `json: "author"`
+	Price     *uint64            `json: "price"`
 	//may be a set of arr for img
-	Image           *string            `json: "image"	validate:"required"`
-	Recommendations int                `json: "recommendections"`
+	Image           *string `json: "image"	validate:"required"`
+	Recommendations int     `json: "recommendections"`
 }
 
 type BookUser struct {

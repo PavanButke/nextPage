@@ -8,8 +8,8 @@ import (
 
 func UserRouter(incocmingRoutes *gin.Engine) {
 	incocmingRoutes.POST("/users/signup", controllers.SignUp())
-	incocmingRoutes.POST("users/login", controllers.Login())
-	incocmingRoutes.POST("/admin/addbooks", controllers.ProductViewerAdmin())
-	incocmingRoutes.POST("user/booksview", controllers.SearchProduct())
-	incocmingRoutes.POST("users/search", controllers.SearchProductByQuery())
+	// incocmingRoutes.POST("users/login", controllers.Login())
+	// incocmingRoutes.POST("/admin/addbooks", controllers.ProductViewerAdmin())
+	// incocmingRoutes.POST("user/booksview", controllers.SearchProduct())
+	// incocmingRoutes.POST("users/search", controllers.SearchProductByQuery())
 }
