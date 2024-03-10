@@ -59,9 +59,9 @@ func RemoveItem() gin.HandlerFunc {
 
 // }
 
-// func borrowFromBasket() gin.HandlerFunc {
+func BorrowFromBasket() gin.HandlerFunc {
 
-// }
+}
 
 func GrabIt() gin.HandlerFunc {
 

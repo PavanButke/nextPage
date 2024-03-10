@@ -119,9 +119,26 @@ func RemoveItem(app *Application) gin.HandlerFunc {
 
 // }
 
-// func BorrowFromBasket() gin.HandlerFunc {
+func (app *Application) BorrowFromBasket() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		userQueryID := c.Query("id")
 
-// }
+		if userQueryID == "" {
+			log.Println("User Id is Empty")
+			c.AbortWithError(http.StatusBadRequest, errors.New("User Id is empty"))
+		}
+
+		var ctx, cancel = context.WithTimeout(context.Background(), 105*time.Second)
+		defer cancel()
+
+		err := database.BorrowFromBasket(ctx, app.userCollection, userQueryID)
+		if err != nil {
+			c.IndentedJSON(http.StatusInternalServerError, err)
+		}
+
+		c.IndentedJSON(http.StatusOK, "Successfully Borrowed!")
+	}
+}
 
 func (app *Application) GrabIt() gin.HandlerFunc {
 	return func(c *gin.Context) {

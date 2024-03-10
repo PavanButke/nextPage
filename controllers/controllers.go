@@ -21,9 +21,9 @@ var UserCollection *mongo.Collection = database.UserData(database.Client, "Users
 var BookCollection *mongo.Collection = database.BookData(database.Client, "Books")
 var Validate = validator.New()
 
-// func VerifyPassword(userpassword string, givenpassword string) (bool, string) {
+func VerifyPassword(userpassword string, givenpassword string) (bool, string) {
 
-// }
+}
 
 func SignUp() gin.HandlerFunc {
 	return func(c *gin.Context) {
@@ -146,9 +146,46 @@ func Login(username string, email string, password string) gin.HandlerFunc {
 
 // }
 
-// func searchBookByQuery() gin.HandlerFunc {
+func searchBookByQuery() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		var searchBooks []models.Book
 
-// }
+		queryParam := c.Query("name")
+
+		//check if is query is empty
+		if queryParam == "" {
+			log.Println("Query is Empty")
+			c.Header("Content-Type", "application/json")
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Query is empty"})
+			c.Abort()
+			return
+		}
+
+		ctx, cancel := context.WithTimeout(context.Background(), 100*time.Second)
+
+		defer cancel()
+
+		searchquerydb, err := BookCollection.Find(ctx, bson.M{"product_name ": bson.M{"$regex": queryParam}})
+		if err != nil {
+			c.IndentedJSON(404, "Something went wrong")
+			return
+		}
+
+		err = searchquerydb.All(ctx, &searchBooks)
+		if err != nil {
+			c.IndentedJSON(404, "Something went wrong")
+			return
+		}
+		defer searchquerydb.Close(ctx)
+		if err := searchquerydb.Err(); err != nil {
+			log.Println(err)
+			c.IndentedJSON(400, "Invalid Request!")
+			return
+		}
+		defer cancel()
+		c.IndentedJSON(200, searchBooks)
+	}
+}
 
 func HashPassword(password string) string {
 	bytes, err := bcrypt.GenerateFromPassword([]byte(password), 14)
